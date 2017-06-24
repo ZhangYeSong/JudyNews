@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">小新新闻</string>
+    <string name="label_guonei">国内</string>
+    <string name="label_world">国际</string>
+    <string name="label_huabian">娱乐</string>
+    <string name="label_tiyu">体育</string>
+    <string name="label_nba">NBA</string>
+    <string name="label_football">足球</string>
+    <string name="label_keji">科技</string>
+    <string name="label_startup">创业</string>
+    <string name="label_apple">苹果</string>
+    <string name="label_military">军事</string>
+    <string name="label_mobile">手机</string>
+    <string name="label_travel">旅游</string>
+    <string name="label_health">健康</string>
+    <string name="label_qiwen">奇闻</string>
+    <string name="label_meinv">美女</string>
+    <string name="label_vr">VR</string>
+    <string name="label_it">IT</string>
+    <string name="btn_module">编辑栏目</string>
+    <string name="text_add_modual">点击添加更多栏目</string>
 </resources>

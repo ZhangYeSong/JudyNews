@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.song.judynews.widget.DragableGridLayout
+        android:id="@+id/gl_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:columnCount="4">
+
+    </com.song.judynews.widget.DragableGridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/pad_text"
+        android:text="@string/text_add_modual"
+        android:gravity="center"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/primary_text"
+        android:background="@color/divider"/>
+
+    <com.song.judynews.widget.DragableGridLayout
+        android:id="@+id/gl_hide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:columnCount="4">
+
+    </com.song.judynews.widget.DragableGridLayout>
+
+
+
+
+
+</LinearLayout>
