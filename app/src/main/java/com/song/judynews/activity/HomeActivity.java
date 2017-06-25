@@ -2,20 +2,34 @@ package com.song.judynews.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.song.judynews.R;
+import com.song.judynews.fragment.BaseFragment;
+import com.song.judynews.fragment.JokeFragment;
+import com.song.judynews.fragment.NewsFragment;
+import com.song.judynews.fragment.SettingFragment;
 import com.song.judynews.presenter.HomePresenter;
 import com.song.judynews.util.Constants;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
+    private FrameLayout mFlHome;
+    private BottomNavigationBar mBnbHome;
 
     private HomePresenter mPresenter;
+    private NewsFragment mNewsFragment;
+    private JokeFragment mJokeFragment;
+    private SettingFragment mSettingFragment;
+    private BaseFragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +39,18 @@ public class HomeActivity extends AppCompatActivity {
 
         //进行各种初始化
         initView();
+        initBottomNavigationBar();
         mPresenter.initData();
+        mNewsFragment = new NewsFragment();
+        mJokeFragment = new JokeFragment();
+        mSettingFragment = new SettingFragment();
+        switchFragment(mNewsFragment);
     }
 
     private void initView() {
         Toolbar toolBar = (Toolbar) findViewById(R.id.tool_bar);
+        mFlHome = (FrameLayout) findViewById(R.id.fl_home);
+        mBnbHome = (BottomNavigationBar) findViewById(R.id.bnb_home);
         setSupportActionBar(toolBar);
     }
 
@@ -50,6 +71,20 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void initBottomNavigationBar() {
+        BottomNavigationItem news = new BottomNavigationItem(R.mipmap.news, Constants.TITLES[0]);
+        BottomNavigationItem joke = new BottomNavigationItem(R.mipmap.joke, Constants.TITLES[1]);
+        BottomNavigationItem setting = new BottomNavigationItem(R.mipmap.setting, Constants.TITLES[2]);
+        mBnbHome.addItem(news);
+        mBnbHome.addItem(joke);
+        mBnbHome.addItem(setting);
+
+        mBnbHome.setActiveColor(R.color.colorPrimary);
+        mBnbHome.setInActiveColor(R.color.divider);
+        mBnbHome.setTabSelectedListener(this);
+        mBnbHome.initialise();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_SELECT || resultCode == Constants.RESULT_SELECT) {
@@ -58,5 +93,52 @@ public class HomeActivity extends AppCompatActivity {
             mPresenter.saveData(showList, hideList);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onTabSelected(int position) {
+        switch (position) {
+            case 0:
+                switchFragment(mNewsFragment);
+                break;
+            case 1:
+                switchFragment(mJokeFragment);
+                break;
+            case 2:
+                switchFragment(mSettingFragment);
+                break;
+        }
+    }
+
+    private void switchFragment(BaseFragment targetFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        if (mCurrentFragment == null) {
+            mCurrentFragment = targetFragment;
+        }
+
+        if (!targetFragment.isAdded()) {
+            transaction
+                    .hide(mCurrentFragment)
+                    .add(R.id.fl_home, targetFragment)
+                    .show(targetFragment)
+                    .commit();
+        } else {
+            transaction
+                    .hide(mCurrentFragment)
+                    .show(targetFragment)
+                    .commit();
+        }
+        mCurrentFragment = targetFragment;
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
     }
 }
