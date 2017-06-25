@@ -2,7 +2,7 @@
 <resources>
     <dimen name="primary_title">24sp</dimen>
     <dimen name="primary_text">20sp</dimen>
-    <dimen name="secondary_text">18sp</dimen>
+    <dimen name="secondary_text">14sp</dimen>
     <dimen name="icon">36dp</dimen>
     <dimen name="pad_text">5dp</dimen>
 </resources>

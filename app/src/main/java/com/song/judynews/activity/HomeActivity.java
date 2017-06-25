@@ -8,16 +8,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.song.judynews.R;
+import com.song.judynews.presenter.HomePresenter;
+import com.song.judynews.util.Constants;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private HomePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mPresenter = new HomePresenter(this);
 
         //进行各种初始化
         initView();
+        mPresenter.initData();
     }
 
     private void initView() {
@@ -35,10 +43,20 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.module:
-                Intent intent = new Intent(HomeActivity.this, EditModuleActivity.class);
-                startActivity(intent);
+                Intent intent = mPresenter.toEditModule();
+                startActivityForResult(intent, Constants.REQUEST_SELECT);
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_SELECT || resultCode == Constants.RESULT_SELECT) {
+            ArrayList<String> showList = data.getStringArrayListExtra(Constants.SHOW_SET);
+            ArrayList<String> hideList = data.getStringArrayListExtra(Constants.HIDE_SET);
+            mPresenter.saveData(showList, hideList);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

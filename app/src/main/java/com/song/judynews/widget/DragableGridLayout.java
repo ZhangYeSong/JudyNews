@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import com.song.judynews.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class DragableGridLayout extends GridLayout {
         }
     };
 
+    //拖动dragedView时的回调
     private OnDragListener odl = new OnDragListener() {
         @Override
         public boolean onDrag(View v, DragEvent event) {
@@ -39,6 +42,7 @@ public class DragableGridLayout extends GridLayout {
                     initRects();
                     break;
 
+                //拖动到DragableGridLayout控件内的位置
                 case DragEvent.ACTION_DRAG_LOCATION:
                     int touchIndex = getTouchIndex(event);
                     if (touchIndex > -1 && dragedView != null && dragedView != DragableGridLayout.this.getChildAt(touchIndex)) {
@@ -70,6 +74,7 @@ public class DragableGridLayout extends GridLayout {
         this.setLayoutTransition(new LayoutTransition());
     }
 
+    //为子控件赋值
     public void setItems(List<String> items) {
         for (String item : items) {
             addItem(item);
@@ -88,6 +93,7 @@ public class DragableGridLayout extends GridLayout {
         this.addView(tv);
     }
 
+    //创建子控件
     private TextView newTextViewItem() {
         int margin = 5;
         LayoutParams params = new LayoutParams();
@@ -96,8 +102,9 @@ public class DragableGridLayout extends GridLayout {
         params.setMargins(margin, margin, margin, margin);
         TextView tv = new TextView(getContext());
         tv.setGravity(Gravity.CENTER);
-        //tv.setBackgroundResource(R.drawable.selector);
+        tv.setBackgroundResource(R.drawable.selector_tv);
         tv.setLayoutParams(params);
+        tv.setTextColor(getResources().getColor(R.color.secondary_text));
         if (mAllowDrag) {
             tv.setOnLongClickListener(olcl);
         } else {
@@ -116,15 +123,16 @@ public class DragableGridLayout extends GridLayout {
 
     }
 
+    //初始化控件内的图形
     private void initRects() {
         mRects = new Rect[DragableGridLayout.this.getChildCount()];
         for (int i = 0; i < DragableGridLayout.this.getChildCount(); i++) {
             View childAt = DragableGridLayout.this.getChildAt(i);
             mRects[i] = new Rect(childAt.getLeft(), childAt.getTop(), childAt.getRight(), childAt.getBottom());
-
         }
     }
 
+    //计算当前View的索引
     private int getTouchIndex(DragEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
@@ -137,8 +145,8 @@ public class DragableGridLayout extends GridLayout {
         return -1;
     }
 
-    public List<String> getItems() {
-        List<String> data = new ArrayList<>();
+    public ArrayList<String> getItems() {
+        ArrayList<String> data = new ArrayList<>();
         for (int i = 0; i < this.getChildCount(); i++) {
             TextView tv = (TextView) this.getChildAt(i);
             data.add(tv.getText().toString());
