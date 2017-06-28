@@ -6,5 +6,5 @@ package com.song.judynews.util;
 
 public interface Urls {
     String BASE_URL = "http://api.tianapi.com/";
-    String APIKEY = "?key=9c9f740f78db90d248358a8ed88f044c";
+    String APIKEY = "9c9f740f78db90d248358a8ed88f044c";
 }
