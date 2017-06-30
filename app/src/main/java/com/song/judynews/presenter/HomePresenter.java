@@ -1,9 +1,8 @@
 package com.song.judynews.presenter;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
-import com.song.judynews.activity.EditModuleActivity;
 import com.song.judynews.activity.HomeActivity;
 import com.song.judynews.util.Constants;
 
@@ -18,7 +17,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Judy on 2017/6/25.
  */
 
-public class HomePresenter {
+public class HomePresenter{
     private HomeActivity mActivity;
     private ArrayList<String> mShowList;
     private ArrayList<String> mHideList;
@@ -53,12 +52,12 @@ public class HomePresenter {
 
     }
 
-    public Intent toEditModule() {
+    public Bundle toEditModule() {
         initData();
-        Intent intent = new Intent(mActivity, EditModuleActivity.class);
-        intent.putExtra(Constants.SHOW_SET, mShowList);
-        intent.putExtra(Constants.HIDE_SET, mHideList);
-        return intent;
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList(Constants.SHOW_SET, mShowList);
+        bundle.putStringArrayList(Constants.HIDE_SET, mHideList);
+        return bundle;
     }
 
     public void saveData(ArrayList<String> showList, ArrayList<String> hideList) {

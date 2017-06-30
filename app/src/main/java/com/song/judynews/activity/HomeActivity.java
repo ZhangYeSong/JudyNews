@@ -3,8 +3,8 @@ package com.song.judynews.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -21,7 +21,7 @@ import com.song.judynews.util.Constants;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     private FrameLayout mFlHome;
     private BottomNavigationBar mBnbHome;
 
@@ -34,24 +34,30 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
         mPresenter = new HomePresenter(this);
-
-        //进行各种初始化
-        initView();
-        initBottomNavigationBar();
         mPresenter.initData();
-        mNewsFragment = new NewsFragment();
-        mJokeFragment = new JokeFragment();
-        mSettingFragment = new SettingFragment();
-        switchFragment(mNewsFragment);
+        initFragment();
     }
 
-    private void initView() {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    protected void initViews() {
         Toolbar toolBar = (Toolbar) findViewById(R.id.tool_bar);
         mFlHome = (FrameLayout) findViewById(R.id.fl_home);
         mBnbHome = (BottomNavigationBar) findViewById(R.id.bnb_home);
         setSupportActionBar(toolBar);
+        initBottomNavigationBar();
+    }
+
+    private void initFragment() {
+        mNewsFragment = new NewsFragment();
+        mJokeFragment = new JokeFragment();
+        mSettingFragment = new SettingFragment();
+        switchFragment(mNewsFragment);
     }
 
     @Override
@@ -64,8 +70,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.module:
-                Intent intent = mPresenter.toEditModule();
-                startActivityForResult(intent, Constants.REQUEST_SELECT);
+                Bundle bundle = mPresenter.toEditModule();
+                startActivityForResult(EditModuleActivity.class, bundle, Constants.REQUEST_SELECT);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -110,7 +116,18 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
         }
     }
 
+    @Override
+    public void onTabUnselected(int position) {
+
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
+    }
+
     private void switchFragment(BaseFragment targetFragment) {
+        Log.d(TAG, "switchFragment: " + targetFragment.getTag());
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
         if (mCurrentFragment == null) {
@@ -120,7 +137,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
         if (!targetFragment.isAdded()) {
             transaction
                     .hide(mCurrentFragment)
-                    .add(R.id.fl_home, targetFragment)
+                    .add(R.id.fl_home, targetFragment, targetFragment.getClass().getSimpleName())
                     .show(targetFragment)
                     .commit();
         } else {
@@ -132,13 +149,4 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
         mCurrentFragment = targetFragment;
     }
 
-    @Override
-    public void onTabUnselected(int position) {
-
-    }
-
-    @Override
-    public void onTabReselected(int position) {
-
-    }
 }

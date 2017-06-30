@@ -52,7 +52,7 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    protected void showshowEmpty() {
+    protected void showEmpty() {
 
     }
 

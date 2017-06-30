@@ -3,7 +3,6 @@ package com.song.judynews.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -12,7 +11,7 @@ import com.song.judynews.presenter.EditModulePresenter;
 import com.song.judynews.util.Constants;
 import com.song.judynews.widget.DragableGridLayout;
 
-public class EditModuleActivity extends AppCompatActivity {
+public class EditModuleActivity extends BaseActivity {
     private EditModulePresenter mPresenter;
     private DragableGridLayout mGlMain;
     private DragableGridLayout mGlHide;
@@ -21,13 +20,18 @@ public class EditModuleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_module);
         mIntent = getIntent();
         mPresenter = new EditModulePresenter(this);
-        initView();
+        mPresenter.initData(mGlMain, mGlHide, mIntent);
     }
 
-    private void initView() {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_edit_module;
+    }
+
+    @Override
+    protected void initViews() {
         mGlMain = (DragableGridLayout) findViewById(R.id.gl_main);
         mGlHide = (DragableGridLayout) findViewById(R.id.gl_hide);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -38,8 +42,6 @@ public class EditModuleActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        mPresenter.initData(mGlMain, mGlHide, mIntent);
     }
 
     @Override
