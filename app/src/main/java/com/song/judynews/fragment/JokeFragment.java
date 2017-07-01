@@ -3,9 +3,9 @@ package com.song.judynews.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.song.judynews.R;
 import com.song.judynews.adapter.JokeAdapter;
 import com.song.judynews.entity.JokeEntity;
@@ -18,11 +18,11 @@ import java.util.List;
  * Created by Judy on 2017/6/25.
  */
 
-public class JokeFragment extends BaseFragment {
+public class JokeFragment extends BaseFragment implements XRecyclerView.LoadingListener {
 
     private static final String TAG = "JokeFragment";
     private JokePresenter mPresenter;
-    private RecyclerView mRecyclerView;
+    private XRecyclerView mRecyclerView;
     private List<JokeEntity.NewslistBean> mData;
     private JokeAdapter mAdapter;
 
@@ -40,13 +40,14 @@ public class JokeFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        mPresenter.loadDataFromNet();
+        mPresenter.loadDataFromNet(mRecyclerView);
     }
 
     private void initView(View view) {
         mData = new ArrayList<>();
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_joke);
+        mRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_joke);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.setLoadingListener(this);
         refreshRecyclerView();
     }
 
@@ -71,6 +72,18 @@ public class JokeFragment extends BaseFragment {
 
     @Override
     protected void reconnect() {
-        mPresenter.loadDataFromNet();
+        mPresenter.loadDataFromNet(mRecyclerView);
+    }
+
+    @Override
+    public void onRefresh() {
+        //下拉刷新
+        mPresenter.loadDataFromNet(mRecyclerView);
+    }
+
+    @Override
+    public void onLoadMore() {
+        //上拉加载更多,由于后段不支持，不作处理
+        mRecyclerView.loadMoreComplete();
     }
 }

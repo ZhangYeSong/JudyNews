@@ -2,6 +2,7 @@ package com.song.judynews.presenter;
 
 import android.util.Log;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.song.judynews.component.APIService;
 import com.song.judynews.component.RetrofitManager;
 import com.song.judynews.entity.JokeEntity;
@@ -22,13 +23,13 @@ import io.reactivex.schedulers.Schedulers;
 public class JokePresenter {
     private static final String TAG = "JokePresenter";
     private JokeFragment mFragment;
-    private final int REQUEST_NUM = 10;
+    private final int REQUEST_NUM = 30;
 
     public JokePresenter(JokeFragment jokeFragment) {
         mFragment = jokeFragment;
     }
 
-    public void loadDataFromNet() {
+    public void loadDataFromNet(final XRecyclerView recyclerView) {
         APIService apiService = RetrofitManager.getInstance(mFragment.mActivity)
                 .create(APIService.class);
 
@@ -54,12 +55,14 @@ public class JokePresenter {
             public void onError(@NonNull Throwable throwable) {
                 Log.d(TAG, "onError: "+throwable.toString());
                 mFragment.showNetworkError();
+                recyclerView.refreshComplete();
             }
 
             @Override
             public void onComplete() {
                 mFragment.hideNoNetwork();
                 mFragment.cancelLoading();
+                recyclerView.refreshComplete();
             }
         });
     }
