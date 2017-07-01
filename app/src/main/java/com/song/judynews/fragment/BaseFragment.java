@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.song.judynews.R;
@@ -18,11 +20,13 @@ import com.song.judynews.activity.HomeActivity;
  * Created by Judy on 2017/6/25.
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
     public HomeActivity mActivity;
     protected View mRootView;
-    private Dialog mLoaing;
+    private Dialog mLoading;
+    private View mNoNetwork;
+    private Button mReConnect;
 
     @Nullable
     @Override
@@ -30,35 +34,52 @@ public abstract class BaseFragment extends Fragment {
         getPresenter();
         mActivity = (HomeActivity) getActivity();
         mRootView = inflater.inflate(getLayoutId(), container, false);
-        return mRootView;
+        mNoNetwork = inflater.inflate(R.layout.no_network, container, false);
+        mReConnect = (Button) mNoNetwork.findViewById(R.id.bt_reconnect);
+        mReConnect.setOnClickListener(this);
+        FrameLayout frameLayout = new FrameLayout(mActivity);
+        frameLayout.addView(mRootView);
+        frameLayout.addView(mNoNetwork);
+        return frameLayout;
     }
 
     protected abstract void getPresenter();
 
     protected abstract int getLayoutId();
 
-    protected void showLoading() {
-        if (mLoaing == null) {
-            mLoaing = new Dialog(mActivity);
-            mLoaing.setContentView(R.layout.loading);
-            ImageView ivLoading = (ImageView) mLoaing.findViewById(R.id.iv_loading);
+    public void showLoading() {
+        if (mLoading == null) {
+            mLoading = new Dialog(mActivity);
+            mLoading.setContentView(R.layout.loading);
+            ImageView ivLoading = (ImageView) mLoading.findViewById(R.id.iv_loading);
             Animation animation = AnimationUtils.loadAnimation(mActivity, R.anim.loading);
             ivLoading.setAnimation(animation);
         }
-        mLoaing.show();
+        mLoading.show();
     }
 
-    protected void showNetworkError() {
-
+    public void showNetworkError() {
+        mNoNetwork.setVisibility(View.VISIBLE);
+        cancelLoading();
     }
 
-    protected void showEmpty() {
-
-    }
-
-    protected void cancelLoaing() {
-        if(mLoaing != null) {
-            mLoaing.dismiss();
+    public void cancelLoading() {
+        if(mLoading != null) {
+            mLoading.dismiss();
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_reconnect:
+                reconnect();
+        }
+    }
+
+    protected abstract void reconnect();
+
+    public void hideNoNetwork() {
+        mNoNetwork.setVisibility(View.GONE);
     }
 }

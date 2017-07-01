@@ -20,4 +20,9 @@ public class SettingFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_setting;
     }
+
+    @Override
+    protected void reconnect() {
+
+    }
 }

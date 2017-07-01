@@ -41,7 +41,7 @@ public class JokePresenter {
                 .subscribe(new Observer<JokeEntity>() {
             @Override
             public void onSubscribe(@NonNull Disposable disposable) {
-
+                mFragment.showLoading();
             }
 
             @Override
@@ -53,11 +53,13 @@ public class JokePresenter {
             @Override
             public void onError(@NonNull Throwable throwable) {
                 Log.d(TAG, "onError: "+throwable.toString());
+                mFragment.showNetworkError();
             }
 
             @Override
             public void onComplete() {
-
+                mFragment.hideNoNetwork();
+                mFragment.cancelLoading();
             }
         });
     }

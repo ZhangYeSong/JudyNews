@@ -20,4 +20,9 @@ public class NewsFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_news;
     }
+
+    @Override
+    protected void reconnect() {
+
+    }
 }

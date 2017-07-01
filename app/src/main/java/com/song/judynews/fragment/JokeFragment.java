@@ -20,6 +20,7 @@ import java.util.List;
 
 public class JokeFragment extends BaseFragment {
 
+    private static final String TAG = "JokeFragment";
     private JokePresenter mPresenter;
     private RecyclerView mRecyclerView;
     private List<JokeEntity.NewslistBean> mData;
@@ -66,5 +67,10 @@ public class JokeFragment extends BaseFragment {
         } else {
             mActivity.showToast(jokeEntity.getMsg());
         }
+    }
+
+    @Override
+    protected void reconnect() {
+        mPresenter.loadDataFromNet();
     }
 }

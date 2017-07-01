@@ -61,12 +61,19 @@ public class RetrofitManager {
                     if (context.isNetworkReachable()) {
                         Log.d("OkHttp", "网络可用响应拦截");
                         response = response.newBuilder()
-                                //覆盖服务器响应头的Cache-Control,用我们自己的,因为服务器响应回来的可能不支持缓存
+                                //有网络时设置缓存时间300秒
                                 .header("Cache-Control", "public,max-age=300")
                                 .removeHeader("Pragma")
                                 .build();
+                    } else {
+                        Log.d("OkHttp", "网络不可用响应拦截");
+                        int maxStale = 60 * 60 * 24 * 28;
+                        response = response.newBuilder()
+                                //无网络时设置缓存时间4周
+                                .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                                .removeHeader("Pragma")
+                                .build();
                     }
-
                     return response;
                 }
             };

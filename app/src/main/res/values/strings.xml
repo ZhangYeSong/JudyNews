@@ -21,4 +21,6 @@
     <string name="text_add_modual">点击添加更多栏目</string>
     <string name="prompt_sort">长按拖动排序</string>
     <string name="dialog_loading">正在加载...</string>
+    <string name="no_network">网络错误</string>
+    <string name="reconnect">重新连接</string>
 </resources>
