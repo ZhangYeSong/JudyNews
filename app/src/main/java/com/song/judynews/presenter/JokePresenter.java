@@ -29,9 +29,14 @@ public class JokePresenter {
     }
 
     public void loadDataFromNet() {
-        APIService apiService = RetrofitManager.getInstance().create(APIService.class);
-        Observable<JokeEntity> jokeObservable = apiService.getJokeEntity(Urls.APIKEY, REQUEST_NUM);
+        APIService apiService = RetrofitManager.getInstance(mFragment.mActivity)
+                .create(APIService.class);
+
+        Observable<JokeEntity> jokeObservable = apiService
+                .getJokeEntity(Urls.APIKEY, REQUEST_NUM);
+
         jokeObservable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JokeEntity>() {
             @Override

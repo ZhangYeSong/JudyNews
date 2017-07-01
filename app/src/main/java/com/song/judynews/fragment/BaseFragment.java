@@ -20,7 +20,7 @@ import com.song.judynews.activity.HomeActivity;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected HomeActivity mActivity;
+    public HomeActivity mActivity;
     protected View mRootView;
     private Dialog mLoaing;
 
