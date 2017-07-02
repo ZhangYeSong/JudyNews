@@ -23,10 +23,12 @@ import io.reactivex.schedulers.Schedulers;
 public class SubTabPresenter {
     private static final String TAG = "SubTabPresenter";
     private SubTabFragment mFragment;
-    private final int REQUEST_NUM = 30;
+    private final int REQUEST_NUM = 15;
+    private String mUrl;
 
-    public SubTabPresenter(SubTabFragment subTabFragment) {
+    public SubTabPresenter(SubTabFragment subTabFragment, String url) {
         mFragment = subTabFragment;
+        mUrl = url;
     }
 
     public void loadDataFromNet(final XRecyclerView recyclerView) {
@@ -34,7 +36,7 @@ public class SubTabPresenter {
                 getInstance(mFragment.mActivity).
                 create(APIService.class);
 
-        Observable<NewsEntity> newsEntityObservable = apiService.getSocialEntity(Urls.APIKEY, REQUEST_NUM);
+        Observable<NewsEntity> newsEntityObservable = apiService.getNewsEntity(mUrl, Urls.APIKEY, REQUEST_NUM);
         newsEntityObservable.subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Observer<NewsEntity>() {

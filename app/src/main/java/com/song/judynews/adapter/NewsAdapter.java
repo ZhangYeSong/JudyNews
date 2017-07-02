@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.song.judynews.R;
 import com.song.judynews.entity.NewsEntity;
 
@@ -49,7 +50,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     @Override
     public void onBindViewHolder(NewsHolder holder, int position) {
         NewsEntity.NewslistBean bean = mData.get(position);
-        Glide.with(mContext).load(bean.getPicUrl()).error(R.mipmap.ic_launcher).into(holder.mIvPic);
+        Glide.with(mContext).load(bean.getPicUrl()).
+                error(R.mipmap.ic_launcher).
+                diskCacheStrategy(DiskCacheStrategy.RESULT).
+                into(holder.mIvPic);
         holder.mTvTitle.setText(bean.getTitle());
         holder.mTvDes.setText(bean.getDescription());
         holder.mTvDate.setText(bean.getCtime());

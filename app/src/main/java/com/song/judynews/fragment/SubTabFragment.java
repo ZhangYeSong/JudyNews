@@ -10,6 +10,7 @@ import com.song.judynews.R;
 import com.song.judynews.adapter.NewsAdapter;
 import com.song.judynews.entity.NewsEntity;
 import com.song.judynews.presenter.SubTabPresenter;
+import com.song.judynews.util.Urls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
     private XRecyclerView mRecyclerView;
     private List<NewsEntity.NewslistBean> mData;
     private NewsAdapter mAdapter;
+    private String mUrl;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
 
     @Override
     protected void getPresenter() {
-        mPresenter = new SubTabPresenter(this);
+        mPresenter = new SubTabPresenter(this, mUrl);
     }
 
     @Override
@@ -86,4 +88,7 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
         mRecyclerView.loadMoreComplete();
     }
 
+    public void setUrl(String url) {
+        mUrl = Urls.getUrlByTitle(url);
+    }
 }

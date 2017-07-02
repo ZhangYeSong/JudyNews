@@ -62,7 +62,9 @@ public class NewsFragment extends BaseFragment {
         }
 
         for (String title : mTitles) {
-            mFragments.add(new SubTabFragment());
+            SubTabFragment tabFragment = new SubTabFragment();
+            tabFragment.setUrl(title);
+            mFragments.add(tabFragment);
         }
 
         if (mPagerAdapter == null) {

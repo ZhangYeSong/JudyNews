@@ -7,6 +7,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by judy on 2017/6/28.
@@ -19,6 +20,7 @@ public interface APIService {
     Observable<JokeEntity> getJokeEntity(@Query("key") String key, @Query("num") int num);
 
     @Headers("Cache-Control: public, max-age=300")
-    @GET("football")
-    Observable<NewsEntity> getSocialEntity(@Query("key") String key, @Query("num") int num);
+    @GET
+    Observable<NewsEntity> getNewsEntity(@Url String url, @Query("key") String key, @Query("num") int num);
+
 }
