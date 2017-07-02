@@ -1,6 +1,7 @@
 package com.song.judynews.component;
 
 import com.song.judynews.entity.JokeEntity;
+import com.song.judynews.entity.NewsEntity;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -16,4 +17,8 @@ public interface APIService {
     @Headers("Cache-Control: public, max-age=300")
     @GET("txapi/joke")
     Observable<JokeEntity> getJokeEntity(@Query("key") String key, @Query("num") int num);
+
+    @Headers("Cache-Control: public, max-age=300")
+    @GET("football")
+    Observable<NewsEntity> getSocialEntity(@Query("key") String key, @Query("num") int num);
 }

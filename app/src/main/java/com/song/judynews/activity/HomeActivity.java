@@ -149,4 +149,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         mCurrentFragment = targetFragment;
     }
 
+    public ArrayList<String> getShowList() {
+        return mPresenter.getShowList();
+    }
+
 }

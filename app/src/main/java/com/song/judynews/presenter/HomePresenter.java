@@ -78,4 +78,8 @@ public class HomePresenter{
         editor.apply();
 
     }
+
+    public ArrayList<String> getShowList() {
+        return mShowList;
+    }
 }

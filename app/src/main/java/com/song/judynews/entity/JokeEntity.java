@@ -76,6 +76,15 @@ public class JokeEntity {
         public void setContent(String content) {
             this.content = content;
         }
+
+        @Override
+        public String toString() {
+            return "NewslistBean{" +
+                    "id=" + id +
+                    ", title='" + title + '\'' +
+                    ", content='" + content + '\'' +
+                    '}';
+        }
     }
 
     @Override

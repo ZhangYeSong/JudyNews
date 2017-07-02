@@ -12,4 +12,6 @@ public class NewsPresenter {
     public NewsPresenter(NewsFragment newsFragment) {
         mFragment = newsFragment;
     }
+
+
 }
