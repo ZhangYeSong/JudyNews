@@ -21,6 +21,7 @@ public interface APIService {
 
     @Headers("Cache-Control: public, max-age=10")
     @GET
-    Observable<NewsEntity> getNewsEntity(@Url String url, @Query("key") String key, @Query("num") int num);
+    Observable<NewsEntity> getNewsEntity(@Url String url, @Query("key") String key,
+                                         @Query("num") int num, @Query("page") int page);
 
 }

@@ -23,20 +23,25 @@ import io.reactivex.schedulers.Schedulers;
 public class SubTabPresenter {
     private static final String TAG = "SubTabPresenter";
     private SubTabFragment mFragment;
-    private final int REQUEST_NUM = 15;
+    private final int REQUEST_NUM = 10;
     private String mUrl;
+    private int mCurrentPage = 0;
 
     public SubTabPresenter(SubTabFragment subTabFragment, String url) {
         mFragment = subTabFragment;
         mUrl = url;
     }
 
-    public void loadDataFromNet(final XRecyclerView recyclerView) {
+    public void loadDataFromNet(final XRecyclerView recyclerView, final boolean isLoadMore) {
+        int page = isLoadMore ? mCurrentPage : 0;
+
         APIService apiService = RetrofitManager.
                 getInstance(mFragment.mActivity).
                 create(APIService.class);
 
-        Observable<NewsEntity> newsEntityObservable = apiService.getNewsEntity(mUrl, Urls.APIKEY, REQUEST_NUM);
+        Observable<NewsEntity> newsEntityObservable = apiService.
+                getNewsEntity(mUrl, Urls.APIKEY, REQUEST_NUM, page);
+
         newsEntityObservable.subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Observer<NewsEntity>() {
@@ -47,22 +52,26 @@ public class SubTabPresenter {
 
                     @Override
                     public void onNext(@NonNull NewsEntity newsEntity) {
-                        Log.d(TAG, "onNext: "+newsEntity.toString());
-                        mFragment.onDataLoaded(newsEntity);
+                        Log.d(TAG, "onNext: " + newsEntity.toString());
+                        if (isLoadMore) {
+                            mCurrentPage++;
+                            mFragment.onDataLoaded(newsEntity, true);
+                        } else {
+                            mFragment.onDataLoaded(newsEntity, false);
+                        }
+
                     }
 
                     @Override
                     public void onError(@NonNull Throwable throwable) {
-                        Log.d(TAG, "onError: "+throwable.toString());
+                        Log.d(TAG, "onError: " + throwable.toString());
                         mFragment.showNetworkError();
-                        recyclerView.refreshComplete();
                     }
 
                     @Override
                     public void onComplete() {
                         mFragment.hideNoNetwork();
                         mFragment.cancelLoading();
-                        recyclerView.refreshComplete();
                     }
                 });
 

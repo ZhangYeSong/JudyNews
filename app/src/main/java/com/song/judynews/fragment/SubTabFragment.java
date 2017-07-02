@@ -32,7 +32,7 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        mPresenter.loadDataFromNet(mRecyclerView);
+        mPresenter.loadDataFromNet(mRecyclerView, false);
     }
 
     private void initView(View view) {
@@ -49,13 +49,18 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
+            mRecyclerView.refreshComplete();
+            mRecyclerView.loadMoreComplete();
         }
     }
 
-    public void onDataLoaded(NewsEntity newsEntity) {
+    public void onDataLoaded(NewsEntity newsEntity, boolean isLoadMore) {
         if (newsEntity.getCode() == 200) {
-            mData.clear();
-            mData.addAll(newsEntity.getNewslist());
+            if (isLoadMore) {
+                mAdapter.addData(newsEntity.getNewslist());
+            } else {
+                mAdapter.setData(newsEntity.getNewslist());
+            }
             refreshRecyclerView();
         } else {
             mActivity.showToast(newsEntity.getMsg());
@@ -74,18 +79,17 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
 
     @Override
     protected void reconnect() {
-        mPresenter.loadDataFromNet(mRecyclerView);
+        mPresenter.loadDataFromNet(mRecyclerView, false);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadDataFromNet(mRecyclerView);
+        mPresenter.loadDataFromNet(mRecyclerView, false);
     }
 
     @Override
     public void onLoadMore() {
-        //上拉加载更多后段暂不支持
-        mRecyclerView.loadMoreComplete();
+        mPresenter.loadDataFromNet(mRecyclerView, true);
     }
 
     public void setUrl(String url) {
