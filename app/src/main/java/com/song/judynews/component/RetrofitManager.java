@@ -52,7 +52,7 @@ public class RetrofitManager {
                         Log.d("OkHttp", "网络不可用请求拦截");
                     } else {
                         request = request.newBuilder()
-                                .cacheControl(CacheControl.FORCE_NETWORK)
+                                .cacheControl(CacheControl.parse(request.headers()))
                                 .build();
                         Log.d("OkHttp", "网络可用请求拦截");
                     }

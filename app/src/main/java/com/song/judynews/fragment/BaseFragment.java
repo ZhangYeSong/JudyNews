@@ -27,20 +27,23 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     private Dialog mLoading;
     private View mNoNetwork;
     private Button mReConnect;
+    private FrameLayout mFrameLayout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getPresenter();
-        mActivity = (HomeActivity) getActivity();
-        mRootView = inflater.inflate(getLayoutId(), container, false);
-        mNoNetwork = inflater.inflate(R.layout.no_network, container, false);
-        mReConnect = (Button) mNoNetwork.findViewById(R.id.bt_reconnect);
-        mReConnect.setOnClickListener(this);
-        FrameLayout frameLayout = new FrameLayout(mActivity);
-        frameLayout.addView(mRootView);
-        frameLayout.addView(mNoNetwork);
-        return frameLayout;
+        if (mFrameLayout == null) {
+            mActivity = (HomeActivity) getActivity();
+            mRootView = inflater.inflate(getLayoutId(), container, false);
+            mNoNetwork = inflater.inflate(R.layout.no_network, container, false);
+            mReConnect = (Button) mNoNetwork.findViewById(R.id.bt_reconnect);
+            mReConnect.setOnClickListener(this);
+            mFrameLayout = new FrameLayout(mActivity);
+            mFrameLayout.addView(mRootView);
+            mFrameLayout.addView(mNoNetwork);
+        }
+        return mFrameLayout;
     }
 
     protected abstract void getPresenter();

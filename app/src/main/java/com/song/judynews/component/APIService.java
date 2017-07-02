@@ -15,11 +15,11 @@ import retrofit2.http.Url;
 
 public interface APIService {
 
-    @Headers("Cache-Control: public, max-age=300")
+    @Headers("Cache-Control: public, max-age=10")
     @GET("txapi/joke")
     Observable<JokeEntity> getJokeEntity(@Query("key") String key, @Query("num") int num);
 
-    @Headers("Cache-Control: public, max-age=300")
+    @Headers("Cache-Control: public, max-age=10")
     @GET
     Observable<NewsEntity> getNewsEntity(@Url String url, @Query("key") String key, @Query("num") int num);
 

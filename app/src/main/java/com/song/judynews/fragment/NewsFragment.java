@@ -52,7 +52,10 @@ public class NewsFragment extends BaseFragment {
         mTlNews.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTlNews.setSmoothScrollingEnabled(true);
 
+        refreshViewPager();
+    }
 
+    private void refreshViewPager() {
         mTitles = mActivity.getShowList();
         Log.d(TAG, "initView: "+mTitles.toString());
         if (mFragments == null) {
@@ -68,7 +71,7 @@ public class NewsFragment extends BaseFragment {
         }
 
         if (mPagerAdapter == null) {
-            mPagerAdapter = new NewsPagerAdapter(mActivity.getSupportFragmentManager(),
+            mPagerAdapter = new NewsPagerAdapter(getChildFragmentManager(),
                     mFragments, mTitles);
             mVpNews.setAdapter(mPagerAdapter);
             mTlNews.setupWithViewPager(mVpNews, true);
