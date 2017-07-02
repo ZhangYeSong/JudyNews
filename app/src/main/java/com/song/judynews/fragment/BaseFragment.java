@@ -67,7 +67,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
     public void cancelLoading() {
-        if(mLoading != null) {
+        if(mLoading != null && mLoading.isShowing()) {
             mLoading.dismiss();
         }
     }

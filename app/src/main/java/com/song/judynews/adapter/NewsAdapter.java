@@ -1,6 +1,7 @@
 package com.song.judynews.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.song.judynews.R;
+import com.song.judynews.activity.HomeActivity;
+import com.song.judynews.activity.WebViewActivity;
 import com.song.judynews.entity.NewsEntity;
 
 import java.util.List;
@@ -49,7 +52,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
 
     @Override
     public void onBindViewHolder(NewsHolder holder, int position) {
-        NewsEntity.NewslistBean bean = mData.get(position);
+        final NewsEntity.NewslistBean bean = mData.get(position);
         Glide.with(mContext).load(bean.getPicUrl()).
                 error(R.mipmap.ic_launcher).
                 diskCacheStrategy(DiskCacheStrategy.RESULT).
@@ -57,6 +60,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         holder.mTvTitle.setText(bean.getTitle());
         holder.mTvDes.setText(bean.getDescription());
         holder.mTvDate.setText(bean.getCtime());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", bean.getUrl());
+                ((HomeActivity)mContext).startActivity(WebViewActivity.class, bundle);
+            }
+        });
     }
 
     @Override
@@ -72,4 +84,5 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     public void addData(List<NewsEntity.NewslistBean> data) {
         mData.addAll(data);
     }
+
 }

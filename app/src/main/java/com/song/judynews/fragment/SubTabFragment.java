@@ -47,6 +47,7 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
         if (mAdapter == null) {
             mAdapter = new NewsAdapter(mActivity, mData);
             mRecyclerView.setAdapter(mAdapter);
+
         } else {
             mAdapter.notifyDataSetChanged();
             mRecyclerView.refreshComplete();
