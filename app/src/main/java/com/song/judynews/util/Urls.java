@@ -35,7 +35,7 @@ public class Urls {
             case "手机":
                 return "mobile";
             case "旅游":
-                return "trvael";
+                return "travel";
             case "健康":
                 return "health";
             case "奇闻":

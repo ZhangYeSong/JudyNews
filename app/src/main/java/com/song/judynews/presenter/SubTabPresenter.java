@@ -2,7 +2,6 @@ package com.song.judynews.presenter;
 
 import android.util.Log;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.song.judynews.component.APIService;
 import com.song.judynews.component.RetrofitManager;
 import com.song.judynews.entity.NewsEntity;
@@ -30,9 +29,10 @@ public class SubTabPresenter {
     public SubTabPresenter(SubTabFragment subTabFragment, String url) {
         mFragment = subTabFragment;
         mUrl = url;
+        Log.d(TAG, "SubTabPresenter: "+url);
     }
 
-    public void loadDataFromNet(final XRecyclerView recyclerView, final boolean isLoadMore) {
+    public void loadDataFromNet(final boolean isLoadMore) {
         int page = isLoadMore ? mCurrentPage : 0;
 
         APIService apiService = RetrofitManager.

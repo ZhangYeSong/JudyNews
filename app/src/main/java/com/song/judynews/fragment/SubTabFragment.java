@@ -32,7 +32,7 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        mPresenter.loadDataFromNet(mRecyclerView, false);
+        mPresenter.loadDataFromNet(false);
     }
 
     private void initView(View view) {
@@ -80,17 +80,17 @@ public class SubTabFragment extends BaseFragment implements XRecyclerView.Loadin
 
     @Override
     protected void reconnect() {
-        mPresenter.loadDataFromNet(mRecyclerView, false);
+        mPresenter.loadDataFromNet(false);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadDataFromNet(mRecyclerView, false);
+        mPresenter.loadDataFromNet(false);
     }
 
     @Override
     public void onLoadMore() {
-        mPresenter.loadDataFromNet(mRecyclerView, true);
+        mPresenter.loadDataFromNet(true);
     }
 
     public void setUrl(String url) {

@@ -46,23 +46,23 @@ public class NewsFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshViewPager();
+    }
+
     private void initView(View view) {
         mTlNews = (TabLayout) view.findViewById(R.id.tl_news);
         mVpNews = (ViewPager) view.findViewById(R.id.vp_news);
         mTlNews.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTlNews.setSmoothScrollingEnabled(true);
-
-        refreshViewPager();
     }
 
     private void refreshViewPager() {
         mTitles = mActivity.getShowList();
         Log.d(TAG, "initView: "+mTitles.toString());
-        if (mFragments == null) {
-            mFragments = new ArrayList<>();
-        } else {
-            mFragments.clear();
-        }
+        mFragments = new ArrayList<>();
 
         for (String title : mTitles) {
             SubTabFragment tabFragment = new SubTabFragment();
@@ -76,8 +76,11 @@ public class NewsFragment extends BaseFragment {
             mVpNews.setAdapter(mPagerAdapter);
             mTlNews.setupWithViewPager(mVpNews, true);
         } else {
+            mPagerAdapter.setTitles(mTitles);
+            mPagerAdapter.setFragments(mFragments);
             mPagerAdapter.notifyDataSetChanged();
         }
+
     }
 
     @Override

@@ -40,7 +40,7 @@ public class JokeFragment extends BaseFragment implements XRecyclerView.LoadingL
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        mPresenter.loadDataFromNet(mRecyclerView);
+        mPresenter.loadDataFromNet();
     }
 
     private void initView(View view) {
@@ -57,6 +57,7 @@ public class JokeFragment extends BaseFragment implements XRecyclerView.LoadingL
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
+            mRecyclerView.refreshComplete();
         }
     }
 
@@ -72,13 +73,13 @@ public class JokeFragment extends BaseFragment implements XRecyclerView.LoadingL
 
     @Override
     protected void reconnect() {
-        mPresenter.loadDataFromNet(mRecyclerView);
+        mPresenter.loadDataFromNet();
     }
 
     @Override
     public void onRefresh() {
         //下拉刷新
-        mPresenter.loadDataFromNet(mRecyclerView);
+        mPresenter.loadDataFromNet();
     }
 
     @Override

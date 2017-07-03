@@ -61,6 +61,11 @@ public class HomePresenter{
     }
 
     public void saveData(ArrayList<String> showList, ArrayList<String> hideList) {
+        mShowList.clear();
+        mHideList.clear();
+        mShowList.addAll(showList);
+        mHideList.addAll(hideList);
+
         SharedPreferences.Editor editor = mActivity.getSharedPreferences(Constants.SP_HOME, MODE_PRIVATE).edit();
         JSONArray showArray = new JSONArray();
         JSONArray hideArray = new JSONArray();

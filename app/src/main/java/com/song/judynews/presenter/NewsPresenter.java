@@ -13,5 +13,4 @@ public class NewsPresenter {
         mFragment = newsFragment;
     }
 
-
 }

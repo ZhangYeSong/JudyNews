@@ -37,4 +37,19 @@ public class NewsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mTitles.get(position);
     }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+    public void setTitles(List<String> titles) {
+        mTitles.clear();
+        mTitles.addAll(titles);
+    }
+
+    public void setFragments(List<Fragment> fragments) {
+        mFragments.clear();
+        mFragments.addAll(fragments);
+    }
 }

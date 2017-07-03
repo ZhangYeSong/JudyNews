@@ -1,33 +1,41 @@
 package com.song.judynews.component;
 
-import io.reactivex.Observable;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.Flowable;
+import io.reactivex.processors.FlowableProcessor;
+import io.reactivex.processors.PublishProcessor;
 
 /**
  * Created by Judy on 2017/6/25.
  */
 
 public class RxBus {
-    private final Subject<Object> mBus;
+    private final FlowableProcessor<Object> mBus;
 
     private RxBus() {
-        mBus = PublishSubject.create();
+        mBus = PublishProcessor.create().toSerialized();
     }
 
-    public static RxBus getDefault() {
-        return RxBusHolder.sInstance;
+    public static RxBus get() {
+        return Holder.BUS;
     }
 
-    private static class RxBusHolder {
-        private static final RxBus sInstance = new RxBus();
+    public void post(Object obj) {
+        mBus.onNext(obj);
     }
 
-    public void post(Object o) {
-        mBus.onNext(o);
+    public <T> Flowable<T> toFlowable(Class<T> tClass) {
+        return mBus.ofType(tClass);
     }
 
-    public <T> Observable<T> toObservable(Class<T> eventType) {
-        return mBus.ofType(eventType);
+    public Flowable<Object> toFlowable() {
+        return mBus;
+    }
+
+    public boolean hasSubscribers() {
+        return mBus.hasSubscribers();
+    }
+
+    private static class Holder {
+        private static final RxBus BUS = new RxBus();
     }
 }
