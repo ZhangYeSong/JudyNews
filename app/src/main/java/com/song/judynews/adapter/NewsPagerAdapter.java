@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.song.judynews.fragment.SubTabFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,13 +14,14 @@ import java.util.List;
  */
 
 public class NewsPagerAdapter extends FragmentPagerAdapter {
+    private static final String TAG = "NewsPagerAdapter";
     private List<Fragment> mFragments;
     private List<String> mTitles;
 
     public NewsPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
         mFragments = fragments;
-        mTitles = titles;
+        mTitles = new ArrayList<>(titles);
     }
 
     @Override
