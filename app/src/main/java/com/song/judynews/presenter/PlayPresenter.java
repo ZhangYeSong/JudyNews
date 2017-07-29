@@ -37,6 +37,8 @@ public class PlayPresenter {
         mRoomId = intent.getStringExtra("room_id");
         if (mRoomId!=null && !TextUtils.isEmpty(mRoomId)) {
             getLiveUrl();
+        } else {
+            mActivity.onBackPressed();
         }
     }
 
@@ -59,6 +61,7 @@ public class PlayPresenter {
                     public void onNext(@NonNull RoomIdEntity roomIdEntity) {
                         Log.d(TAG, "onNext: "+roomIdEntity.toString());
                         mHls_url = roomIdEntity.getData().getHls_url();
+                        mActivity.onUrlLoaded(mHls_url);
                     }
 
                     @Override
@@ -71,5 +74,6 @@ public class PlayPresenter {
 
                     }
                 });
+
     }
 }
