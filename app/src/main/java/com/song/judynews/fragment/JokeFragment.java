@@ -84,7 +84,7 @@ public class JokeFragment extends BaseFragment implements XRecyclerView.LoadingL
 
     @Override
     public void onLoadMore() {
-        //上拉加载更多,由于后段不支持，不作处理
+        //上拉加载更多,由于后端不支持，不作处理
         mRecyclerView.loadMoreComplete();
     }
 }

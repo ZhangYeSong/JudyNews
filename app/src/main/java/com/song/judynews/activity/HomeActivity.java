@@ -15,7 +15,7 @@ import com.song.judynews.R;
 import com.song.judynews.fragment.BaseFragment;
 import com.song.judynews.fragment.JokeFragment;
 import com.song.judynews.fragment.NewsFragment;
-import com.song.judynews.fragment.SettingFragment;
+import com.song.judynews.fragment.LiveFragment;
 import com.song.judynews.presenter.HomePresenter;
 import com.song.judynews.util.Constants;
 
@@ -28,7 +28,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     private HomePresenter mPresenter;
     private NewsFragment mNewsFragment;
     private JokeFragment mJokeFragment;
-    private SettingFragment mSettingFragment;
+    private LiveFragment mLiveFragment;
     private BaseFragment mCurrentFragment;
 
     @Override
@@ -56,7 +56,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     private void initFragment() {
         mNewsFragment = new NewsFragment();
         mJokeFragment = new JokeFragment();
-        mSettingFragment = new SettingFragment();
+        mLiveFragment = new LiveFragment();
         switchFragment(mNewsFragment);
     }
 
@@ -111,7 +111,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 switchFragment(mJokeFragment);
                 break;
             case 2:
-                switchFragment(mSettingFragment);
+                switchFragment(mLiveFragment);
                 break;
         }
     }

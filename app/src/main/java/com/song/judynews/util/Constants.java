@@ -12,5 +12,5 @@ public interface Constants {
     String HIDE_SET = "HIDE_SET";
     String DEF_SHOW_SET = "[\"社会\",\"国内\",\"国际\",\"娱乐\",\"体育\",\"NBA\",\"足球\",\"科技\",\"创业\"]";
     String DEF_HIDE_SET = "[\"苹果\",\"军事\",\"手机\",\"旅游\",\"健康\",\"奇闻\",\"美女\",\"VR\",\"IT\"]";
-    String[] TITLES = {"新闻", "笑话", "设置"};
+    String[] TITLES = {"新闻", "笑话", "直播"};
 }
