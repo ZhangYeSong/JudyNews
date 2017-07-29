@@ -3,6 +3,7 @@ package com.song.judynews.component;
 import com.song.judynews.entity.JokeEntity;
 import com.song.judynews.entity.LiveEntity;
 import com.song.judynews.entity.NewsEntity;
+import com.song.judynews.entity.RoomIdEntity;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -27,5 +28,8 @@ public interface APIService {
 
     @GET
     Observable<LiveEntity> getLiveEntity(@Url String url, @Query("limit") int limit);
+
+    @GET
+    Observable<RoomIdEntity> getRoomIdEntity(@Url String url, @Query("roomId") String roomId);
 
 }

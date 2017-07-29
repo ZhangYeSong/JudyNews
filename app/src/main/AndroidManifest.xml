@@ -20,10 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.EditModuleActivity"
+        <activity
+            android:name=".activity.EditModuleActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".activity.WebViewActivity"
+        <activity
+            android:name=".activity.WebViewActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".activity.PlayActivity">
+        </activity>
     </application>
 
 </manifest>

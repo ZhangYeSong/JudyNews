@@ -306,5 +306,46 @@ public class LiveEntity {
         public void setAnchor_city(String anchor_city) {
             this.anchor_city = anchor_city;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "room_id='" + room_id + '\'' +
+                    ", room_src='" + room_src + '\'' +
+                    ", vertical_src='" + vertical_src + '\'' +
+                    ", isVertical=" + isVertical +
+                    ", cate_id=" + cate_id +
+                    ", room_name='" + room_name + '\'' +
+                    ", show_status='" + show_status + '\'' +
+                    ", subject='" + subject + '\'' +
+                    ", show_time='" + show_time + '\'' +
+                    ", owner_uid='" + owner_uid + '\'' +
+                    ", specific_catalog='" + specific_catalog + '\'' +
+                    ", specific_status='" + specific_status + '\'' +
+                    ", vod_quality='" + vod_quality + '\'' +
+                    ", nickname='" + nickname + '\'' +
+                    ", online=" + online +
+                    ", url='" + url + '\'' +
+                    ", game_url='" + game_url + '\'' +
+                    ", game_name='" + game_name + '\'' +
+                    ", child_id=" + child_id +
+                    ", avatar='" + avatar + '\'' +
+                    ", avatar_mid='" + avatar_mid + '\'' +
+                    ", avatar_small='" + avatar_small + '\'' +
+                    ", jumpUrl='" + jumpUrl + '\'' +
+                    ", fans='" + fans + '\'' +
+                    ", ranktype=" + ranktype +
+                    ", is_noble_rec=" + is_noble_rec +
+                    ", anchor_city='" + anchor_city + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "LiveEntity{" +
+                "error=" + error +
+                ", data=" + data +
+                '}';
     }
 }

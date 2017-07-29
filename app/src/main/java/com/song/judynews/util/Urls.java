@@ -8,6 +8,7 @@ public class Urls {
     final public static String BASE_URL = "http://api.tianapi.com/";
     final public static String APIKEY = "9c9f740f78db90d248358a8ed88f044c";
     final public static String DouyuUrl = "http://capi.douyucdn.cn/api/v1/live";
+    final public static String DouyuRoomUrl = "https://m.douyu.com/html5/live";
 
     public static String getUrlByTitle(String title) {
         switch (title) {

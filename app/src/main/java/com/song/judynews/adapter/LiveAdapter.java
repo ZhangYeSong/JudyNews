@@ -1,6 +1,7 @@
 package com.song.judynews.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.song.judynews.R;
 import com.song.judynews.activity.HomeActivity;
+import com.song.judynews.activity.PlayActivity;
 import com.song.judynews.entity.LiveEntity;
 
 import java.util.ArrayList;
@@ -51,15 +53,26 @@ public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.LiveHolder>{
 
     @Override
     public void onBindViewHolder(LiveHolder holder, int position) {
-        LiveEntity.DataBean bean = mData.get(position);
+        final LiveEntity.DataBean bean = mData.get(position);
         Glide.with(mContext).load(bean.getRoom_src()).into(holder.mIvPreview);
         holder.mRoomName.setText(bean.getRoom_name());
         holder.mGameName.setText(bean.getGame_name());
         holder.mNickName.setText(bean.getNickname());
         holder.mOnlineNum.setText(formateOnlineNum(bean.getOnline()));
+
+        //点击跳转播放界面
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PlayActivity.class);
+                intent.putExtra("room_id", bean.getRoom_id());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     private String formateOnlineNum(int online) {
+        //对观众人数作处理
         if (online < 10000) {
             return online+"";
         } else {
