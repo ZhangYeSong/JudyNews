@@ -1,6 +1,7 @@
 package com.song.judynews.component;
 
 import com.song.judynews.entity.JokeEntity;
+import com.song.judynews.entity.LiveEntity;
 import com.song.judynews.entity.NewsEntity;
 
 import io.reactivex.Observable;
@@ -23,5 +24,8 @@ public interface APIService {
     @GET
     Observable<NewsEntity> getNewsEntity(@Url String url, @Query("key") String key,
                                          @Query("num") int num, @Query("page") int page);
+
+    @GET
+    Observable<LiveEntity> getLiveEntity(@Url String url, @Query("limit") int limit);
 
 }

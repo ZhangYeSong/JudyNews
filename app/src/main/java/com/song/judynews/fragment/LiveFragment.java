@@ -2,11 +2,13 @@ package com.song.judynews.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.song.judynews.R;
+import com.song.judynews.adapter.LiveAdapter;
+import com.song.judynews.entity.LiveEntity;
 import com.song.judynews.presenter.LivePresenter;
 
 import java.util.ArrayList;
@@ -18,8 +20,9 @@ import java.util.ArrayList;
 public class LiveFragment extends BaseFragment implements XRecyclerView.LoadingListener {
 
     private LivePresenter mPresenter;
-    private ArrayList<Object> mData;
+    private ArrayList<LiveEntity.DataBean> mData;
     private XRecyclerView mRecyclerView;
+    private LiveAdapter mAdapter;
 
     @Override
     protected void getPresenter() {
@@ -33,7 +36,7 @@ public class LiveFragment extends BaseFragment implements XRecyclerView.LoadingL
 
     @Override
     protected void reconnect() {
-
+        mPresenter.loadDataFromNet();
     }
 
     @Override
@@ -46,13 +49,29 @@ public class LiveFragment extends BaseFragment implements XRecyclerView.LoadingL
     private void initView(View view) {
         mData = new ArrayList<>();
         mRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_live);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         mRecyclerView.setLoadingListener(this);
         refreshRecyclerView();
     }
 
     private void refreshRecyclerView() {
-        // TODO: 2017/7/29  
+        if (mAdapter == null) {
+            mAdapter = new LiveAdapter(mActivity, mData);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+            mRecyclerView.refreshComplete();
+        }
+    }
+
+    public void onDataLoaded(LiveEntity liveEntity) {
+        if (liveEntity.getError() == 0) {
+            mData.clear();
+            mData.addAll(liveEntity.getData());
+            refreshRecyclerView();
+        } else {
+            mActivity.showToast("错误码：" + liveEntity.getError());
+        }
     }
 
     @Override
@@ -62,6 +81,8 @@ public class LiveFragment extends BaseFragment implements XRecyclerView.LoadingL
 
     @Override
     public void onLoadMore() {
-
+        //后端接口暂不支持
+        mRecyclerView.loadMoreComplete();
     }
+
 }

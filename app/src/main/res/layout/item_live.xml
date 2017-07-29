@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:elevation="5dp"
     app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="5dp">
 
 
@@ -18,7 +18,8 @@
             android:id="@+id/iv_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="center"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher"/>
 
         <TextView
@@ -26,40 +27,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/iv_preview"
+            android:layout_alignBottom="@+id/iv_preview"
+            android:ellipsize="end"
+            android:maxLength="20"
             android:text="aaaa"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/primary_text"/>
+            android:textColor="@color/icons"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/secondary_text"/>
 
         <TextView
             android:id="@+id/game_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/iv_preview"
+            android:layout_alignTop="@+id/iv_preview"
             android:text="aaaa"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/primary_text"/>
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/secondary_text"/>
 
         <TextView
             android:id="@+id/nick_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/room_name"
+            android:layout_below="@+id/iv_preview"
             android:text="aaaa"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/primary_text"/>
+            android:textSize="@dimen/secondary_text"/>
 
         <TextView
             android:id="@+id/online_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/game_name"
+            android:layout_below="@id/iv_preview"
             android:text="aaaa"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/primary_text"/>
+            android:textSize="@dimen/secondary_text"/>
 
     </RelativeLayout>
 
