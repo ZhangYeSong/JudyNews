@@ -26,7 +26,12 @@
         <activity
             android:name=".activity.WebViewActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".activity.PlayActivity">
+        <activity android:name=".activity.PlayActivity"
+                  android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden"
+                  android:launchMode="singleTop"
+                  android:theme="@style/FullScreen"
+                  android:screenOrientation="landscape"
+                  android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
     </application>
 
